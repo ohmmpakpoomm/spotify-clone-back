@@ -35,3 +35,17 @@ exports.login = catchError(async (req, res, next) => {
   const accessToken = jwtService.sign(payload);
   res.status(200).send({ accessToken: accessToken, user: user });
 });
+
+exports.changePassword = catchError(async (req, res, next) => {
+  const existUser = await userService.findUserByEmailOrMobile(
+    req.body.email || req.body.mobile
+  );
+  if (!existUser) {
+    createError("user not found", 400);
+  }
+  await userService.updateUserByEmailOrMobile(
+    req.body,
+    req.body.email || req.body.mobile
+  );
+  res.status(200).send({ message: "change password success" });
+});

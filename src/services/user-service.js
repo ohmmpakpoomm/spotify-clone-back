@@ -16,7 +16,12 @@ exports.login = (input) =>
     },
   });
 
-exports.findUserById = (id) => prisma.user.findUnique({ where: { id } });
+exports.updateUserByEmailOrMobile = (data, emailOrMobile) =>
+  prisma.user.update({
+    data,
+    where: {
+      OR: [{ email: emailOrMobile }, { mobile: emailOrMobile }],
+    },
+  });
 
-exports.updateUserById = (data, id) =>
-  prisma.user.update({ data, where: { id } });
+exports.findUserById = (id) => prisma.user.findUnique({ where: { id } });
