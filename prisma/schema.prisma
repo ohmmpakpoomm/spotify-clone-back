@@ -6,6 +6,64 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+enum Status {
+  REGULAR
+  PREMIUM
+  DISABLED
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  firstName String     @map("first_name")
+  lastName  String     @map("last_name")
+  email     String?    @unique
+  mobile    String?    @unique
+  password  String
+  status    Status     @default(REGULAR)
+  createdAt DateTime   @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime   @updatedAt @map("updated_at") @db.Timestamp(0)
+  Playlist  Playlist[]
+
+  @@map("users")
+}
+
+model Playlist {
+  id            Int            @id @default(autoincrement())
+  name          String
+  user          User           @relation(fields: [userId], references: [id])
+  userId        Int            @map("user_id")
+  playlistImage String?        @map("playlist_image")
+  createdAt     DateTime       @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt     DateTime       @updatedAt @map("updated_at") @db.Timestamp(0)
+  PlaylistList  PlaylistList[]
+
+  @@map("playlists")
+}
+
+model Music {
+  id           Int            @id @default(autoincrement())
+  name         String
+  uri          String
+  durationMs   String         @map("duration_ms")
+  albumImage   String         @map("album_image")
+  albumName    String         @map("album_name")
+  artistName   String         @map("artist_name")
+  addAt        DateTime       @default(now()) @map("add_at") @db.Timestamp(0)
+  PlaylistList PlaylistList[]
+
+  @@map("musics")
+}
+
+model PlaylistList {
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  playlistId Int      @map("playlist_id")
+  music      Music    @relation(fields: [musicId], references: [id])
+  musicId    Int      @map("music_id")
+
+  @@id([playlistId, musicId])
+  @@map("playlist_lists")
 }
