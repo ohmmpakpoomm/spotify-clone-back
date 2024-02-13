@@ -5,15 +5,17 @@ const validateLogin = require("../middlewares/validate-login");
 
 const authController = require("../controllers/auth-controller");
 const validateChangePassword = require("../middlewares/validate-changePassword");
+const authenticate = require("../middlewares/authenticate");
 
 const router = express.Router();
 
 router.post("/register", validateRegister, authController.register);
 router.post("/login", validateLogin, authController.login);
 router.patch(
-  "/forgot-password",
+  "/change-password",
   validateChangePassword,
   authController.changePassword
 );
+router.get("/me", authenticate, authController.getMe);
 
 module.exports = router;

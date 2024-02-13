@@ -16,12 +16,18 @@ exports.login = (input) =>
     },
   });
 
-exports.updateUserByEmailOrMobile = (data, emailOrMobile) =>
-  prisma.user.update({
-    data,
-    where: {
-      OR: [{ email: emailOrMobile }, { mobile: emailOrMobile }],
-    },
-  });
+exports.updateUserByEmailOrMobile = (password, emailOrMobile) => {
+  if (emailOrMobile == /^[0-9]{10}$/) {
+    return prisma.user.update({
+      data: { password },
+      where: { mobile: emailOrMobile },
+    });
+  } else {
+    return prisma.user.update({
+      data: { password },
+      where: { email: emailOrMobile },
+    });
+  }
+};
 
 exports.findUserById = (id) => prisma.user.findUnique({ where: { id } });

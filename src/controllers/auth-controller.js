@@ -43,9 +43,14 @@ exports.changePassword = catchError(async (req, res, next) => {
   if (!existUser) {
     createError("user not found", 400);
   }
+  req.body.password = await hashService.hash(req.body.password);
   await userService.updateUserByEmailOrMobile(
-    req.body,
+    req.body.password,
     req.body.email || req.body.mobile
   );
   res.status(200).send({ message: "change password success" });
+});
+
+exports.getMe = catchError(async (req, res, next) => {
+  res.status(200).send({ user: req.user });
 });

@@ -23,11 +23,16 @@ const changePasswordSchema = joi.object({
       "string.pattern.base":
         "password must be 6-20 characters and contain only alphabet and number",
     }),
-  confirmPassword: joi.string().required().valid(joi.ref("password")).messages({
-    "any.required": "confirm password is required",
-    "string.empty": "confirm password is required",
-    "any.only": "password and confirm password did not match",
-  }),
+  confirmPassword: joi
+    .string()
+    .required()
+    .valid(joi.ref("password"))
+    .messages({
+      "any.required": "confirm password is required",
+      "string.empty": "confirm password is required",
+      "any.only": "password and confirm password did not match",
+    })
+    .strip(),
   email: joi
     .string()
     .forbidden()
