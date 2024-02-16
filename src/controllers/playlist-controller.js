@@ -1,0 +1,18 @@
+const catchError = require("../utils/catch-error");
+const createError = require("../utils/create-error");
+const playlistService = require("../services/playlist-service");
+
+exports.createPlaylist = catchError(async (req, res, next) => {
+  await playlistService.createPlaylist(req.user.id);
+  res.status(201).send({ message: "create playlist success" });
+});
+
+exports.getPlaylist = catchError(async (req, res, next) => {
+  const playlists = await playlistService.getPlaylist(req.user.id);
+  res.status(200).send({ playlists });
+});
+
+exports.deletePlaylist = catchError(async (req, res, next) => {
+  await playlistService.deletePlaylist(+req.params.playlistId);
+  res.status(200).send({ message: "delete playlist success" });
+});
