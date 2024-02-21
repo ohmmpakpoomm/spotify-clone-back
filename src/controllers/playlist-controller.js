@@ -16,3 +16,25 @@ exports.deletePlaylist = catchError(async (req, res, next) => {
   await playlistService.deletePlaylist(+req.params.playlistId);
   res.status(200).send({ message: "delete playlist success" });
 });
+
+exports.addTrackToPlaylist = catchError(async (req, res, next) => {
+  await playlistService.addTrackToPlaylist(
+    +req.params.playlistId,
+    req.body.data.id
+  );
+  res.status(201).send({ message: "add track to playlist success" });
+});
+
+exports.deleteTrackInPlaylist = catchError(async (req, res, next) => {
+  await playlistService.deleteTrackInPlaylist(
+    +req.params.playlistId,
+    +req.params.trackId
+  );
+  res.status(201).send({ message: "delete track in playlist success" });
+});
+
+exports.getPlaylistList = catchError(async (req, res, next) => {
+  const data = await playlistService.getPlaylistList(+req.params.playlistId);
+  const items = data.map((obj, index) => obj.track);
+  res.status(201).send(items);
+});

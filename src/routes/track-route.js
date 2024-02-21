@@ -2,10 +2,10 @@ const express = require("express");
 
 const authenticate = require("../middlewares/authenticate");
 
-const musicController = require("../controllers/music-controller");
+const trackController = require("../controllers/track-controller");
 
 const router = express.Router();
 
-router.get("/search", authenticate, musicController.searchTrack);
+router.post("", authenticate, trackController.addTrack);
 
 module.exports = router;

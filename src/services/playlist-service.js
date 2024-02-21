@@ -12,3 +12,17 @@ exports.getPlaylist = (userId) =>
   prisma.playlist.findMany({ where: { userId } });
 
 exports.deletePlaylist = (id) => prisma.playlist.delete({ where: { id } });
+
+exports.addTrackToPlaylist = (playlistId, trackId) =>
+  prisma.playlistList.create({ data: { playlistId, trackId } });
+
+exports.deleteTrackInPlaylist = (playlistId, trackId) =>
+  prisma.playlistList.delete({
+    where: { playlistId_trackId: { playlistId, trackId } },
+  });
+
+exports.getPlaylistList = (playlistId) =>
+  prisma.playlistList.findMany({
+    where: { playlistId },
+    include: { track: true },
+  });
