@@ -20,5 +20,6 @@ router.delete(
   playlistController.deleteTrackInPlaylist
 );
 router.get("/:playlistId", authenticate, playlistController.getPlaylistList);
+router.get("/id/:playlistId", authenticate, playlistController.getPlaylistById);
 
 module.exports = router;

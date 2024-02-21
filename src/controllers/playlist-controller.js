@@ -38,3 +38,8 @@ exports.getPlaylistList = catchError(async (req, res, next) => {
   const items = data.map((obj, index) => obj.track);
   res.status(201).send(items);
 });
+
+exports.getPlaylistById = catchError(async (req, res, next) => {
+  const result = await playlistService.getPlaylistById(+req.params.playlistId);
+  res.status(201).send(result);
+});

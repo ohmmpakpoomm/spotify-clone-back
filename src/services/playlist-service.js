@@ -26,3 +26,5 @@ exports.getPlaylistList = (playlistId) =>
     where: { playlistId },
     include: { track: true },
   });
+
+exports.getPlaylistById = (id) => prisma.playlist.findFirst({ where: { id } });
