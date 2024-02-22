@@ -13,7 +13,9 @@ exports.getPlaylist = catchError(async (req, res, next) => {
 });
 
 exports.deletePlaylist = catchError(async (req, res, next) => {
-  await playlistService.deletePlaylist(+req.params.playlistId);
+  await playlistService.deletePlaylistAndAllTrackInPlaylist(
+    +req.params.playlistId
+  );
   res.status(200).send({ message: "delete playlist success" });
 });
 

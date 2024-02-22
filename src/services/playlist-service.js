@@ -13,6 +13,15 @@ exports.getPlaylist = (userId) =>
 
 exports.deletePlaylist = (id) => prisma.playlist.delete({ where: { id } });
 
+exports.deleteAllTrackInPlaylist = (playlistId) =>
+  prisma.playlistList.deleteMany({ where: { playlistId } });
+
+exports.deletePlaylistAndAllTrackInPlaylist = (id) =>
+  prisma.$transaction([
+    this.deleteAllTrackInPlaylist(id),
+    this.deletePlaylist(id),
+  ]);
+
 exports.addTrackToPlaylist = (playlistId, trackId) =>
   prisma.playlistList.create({ data: { playlistId, trackId } });
 
