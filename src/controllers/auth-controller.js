@@ -54,3 +54,8 @@ exports.changePassword = catchError(async (req, res, next) => {
 exports.getMe = catchError(async (req, res, next) => {
   res.status(200).send({ user: req.user });
 });
+
+exports.deleteUser = catchError(async (req, res, next) => {
+  await userService.deleteUser(+req.params.userId);
+  res.status(200).send({ message: "delete user success" });
+});

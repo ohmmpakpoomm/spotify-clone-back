@@ -30,7 +30,7 @@ model Playlist {
   createdAt     DateTime       @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt     DateTime       @updatedAt @map("updated_at") @db.Timestamp(0)
   PlaylistList  PlaylistList[]
-  user          User           @relation(fields: [userId], references: [id])
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId], map: "playlists_user_id_fkey")
   @@map("playlists")
@@ -53,8 +53,8 @@ model Track {
 model PlaylistList {
   playlistId Int      @map("playlist_id")
   trackId    Int      @map("track_id")
-  playlist   Playlist @relation(fields: [playlistId], references: [id])
-  track      Track    @relation(fields: [trackId], references: [id])
+  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  track      Track    @relation(fields: [trackId], references: [id], onDelete: Cascade)
 
   @@id([playlistId, trackId])
   @@index([trackId], map: "playlist_lists_track_id_fkey")

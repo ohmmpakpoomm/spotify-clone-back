@@ -31,3 +31,5 @@ exports.updateUserByEmailOrMobile = (password, emailOrMobile) => {
 };
 
 exports.findUserById = (id) => prisma.user.findUnique({ where: { id } });
+
+exports.deleteUser = (id) => prisma.user.delete({ where: { id } });

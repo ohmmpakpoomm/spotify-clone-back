@@ -16,6 +16,7 @@ router.patch(
   validateChangePassword,
   authController.changePassword
 );
+router.delete("/delete/:userId", authenticate, authController.deleteUser);
 router.get("/me", authenticate, authController.getMe);
 
 module.exports = router;
