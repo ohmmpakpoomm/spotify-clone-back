@@ -45,3 +45,10 @@ exports.getPlaylistById = catchError(async (req, res, next) => {
   const result = await playlistService.getPlaylistById(+req.params.playlistId);
   res.status(201).send(result);
 });
+exports.changePlaylistInfoById = catchError(async (req, res, next) => {
+  const result = await playlistService.changePlaylistInfoById(
+    +req.params.playlistId,
+    req.body
+  );
+  res.status(200).send(result);
+});

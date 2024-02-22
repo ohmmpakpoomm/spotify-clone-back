@@ -20,6 +20,11 @@ router.delete(
   playlistController.deleteTrackInPlaylist
 );
 router.get("/:playlistId", authenticate, playlistController.getPlaylistList);
+router.patch(
+  "/:playlistId",
+  authenticate,
+  playlistController.changePlaylistInfoById
+);
 router.get("/id/:playlistId", authenticate, playlistController.getPlaylistById);
 
 module.exports = router;

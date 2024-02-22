@@ -37,3 +37,6 @@ exports.getPlaylistList = (playlistId) =>
   });
 
 exports.getPlaylistById = (id) => prisma.playlist.findFirst({ where: { id } });
+
+exports.changePlaylistInfoById = (id, data) =>
+  prisma.playlist.update({ where: { id }, data });
